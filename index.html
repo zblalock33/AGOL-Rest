@@ -11,13 +11,14 @@
   <script src="https://js.arcgis.com/4.25/"></script>
 
   <script>
-    require([
-      "esri/config",
-      "esri/Map",
-      "esri/views/MapView",
-      "esri/Graphic",
-      "esri/layers/GraphicsLayer"
-    ], function (esriConfig, Map, MapView, Graphic, GraphicsLayer) {
+  require([
+  "esri/config",
+  "esri/Map",
+  "esri/views/MapView",
+  "esri/Graphic",
+  "esri/layers/GraphicsLayer",
+  "esri/geometry/Circle" // Add this line
+], function (esriConfig, Map, MapView, Graphic, GraphicsLayer, Circle) { 
 
       esriConfig.apiKey = "AAPKe367f617298443399fc84e09cfba226eZzqIjHaqv84HLXuHlUkI6Kt99JRacHNYU2Z3chdWf_r-pBsewnCEgGCKJiK4THyb";
       const map = new Map({
@@ -99,7 +100,7 @@
 
       // Create a circle around the point
       const circleGeometry = new Circle({
-        center: "point", // Center of the circle
+        center: point, // Center of the circle
         radius: 20, // Radius 
         numberOfPoints: 100,
         spatialReference: view.spatialReference
