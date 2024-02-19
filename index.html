@@ -73,18 +73,18 @@
       const polyline = {
         type: "polyline",
         paths: [
-          [-97.800, 30.300], // Starting point
-          [-97.800, 30.200], // Bottom left
-          [-97.700, 30.200], // Bottom right
-          [-97.700, 30.300], // Top right
-          [-97.800, 30.300]  // Closing the path
+          [-97.800, 30.300],
+          [-97.800, 30.200], 
+          [-97.700, 30.200], 
+          [-97.700, 30.300], 
+          [-97.800, 30.300]  
         ]
       };
 
       // Define the symbol for the polyline
       const polylineSymbol = {
         type: "simple-line",
-        color: [226, 119, 40], // Orange
+        color: [226, 119, 40], 
         width: 4
       };
 
@@ -97,22 +97,22 @@
       // Add the polyline graphic to the map
       graphicsLayer.add(polylineGraphic);
 
-      // Define the geometry for the square polygon around the existing triangle point
+      // Define the geometry for the square polygon 
       const polygon = {
         type: "polygon",
         rings: [
-          [-97.751689, 30.264098], // Top left
-          [-97.751689, 30.262098], // Bottom left
-          [-97.749689, 30.262098], // Bottom right
-          [-97.749689, 30.264098], // Top right
-          [-97.751689, 30.264098]  // Closing the path
+          [-97.751689, 30.264098], 
+          [-97.751689, 30.262098], 
+          [-97.749689, 30.262098], 
+          [-97.749689, 30.264098], 
+          [-97.751689, 30.264098]  
         ]
       };
 
-      // Define the symbol for the polygon
+      // Define the symbol 
       const polygonSymbol = {
         type: "simple-fill",
-        color: [0, 0, 0, 0.1], // Semi-transparent black
+        color: [0, 0, 0, 0.1], 
         outline: {
           color: [0, 0, 0],
           width: 2
