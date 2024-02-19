@@ -16,8 +16,12 @@
     require([
      "esri/config",
       "esri/Map",
-      "esri/views/MapView"
-    ], function (esriConfig,Map, MapView) {
+      "esri/views/MapView",
+      // adding in the modules for the graphic layer 
+      "esri/Graphic",
+      "esri/layers/GraphicsLayer"
+  
+    ], function (esriConfig,Map, MapView, Graphic, GraphicsLayer) {
 
       esriConfig.apiKey = "AAPKe367f617298443399fc84e09cfba226eZzqIjHaqv84HLXuHlUkI6Kt99JRacHNYU2Z3chdWf_r-pBsewnCEgGCKJiK4THyb";
       const map = new Map({
@@ -30,7 +34,42 @@
           zoom: 13, // Zoom level
           container: "viewDiv" // Div element
         });
-    });
+  
+
+
+    // adding the constructor for the graphics layer
+    const graphicsLayer = new GraphicsLayer();
+    map.add(graphicsLayer); 
+
+
+    // defininig the geometry of the point
+    const point= { // create a point
+      type: "point",
+      longitude: -97.750689 ,
+      latitude: 30.263098    
+    };
+
+
+   // defining the marker style
+   const simpleMarkerSymbol = {  
+  type: "simple-marker",  
+  color: [0, 0, 139],  // Color of blues rock
+  outline: {  
+    color: [255, 255, 255], // White  
+    width: 1
+  }  
+};
+
+  // creating the point
+  const pointGraphic = new Graphic({  
+  geometry: point,  
+  symbol: simpleMarkerSymbol  
+  });
+
+ // adding the point to the graphicsLayer
+  graphicsLayer.add(pointGraphic);
+  });
+
   </script>
 
   <!-- css to make a full screen map -->
