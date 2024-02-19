@@ -19,15 +19,14 @@
       "esri/layers/GraphicsLayer"
     ], function (esriConfig, Map, MapView, Graphic, GraphicsLayer) {
 
-      esriConfig.apiKey = "YOUR_API_KEY_HERE";
+      esriConfig.apiKey = "AAPKe367f617298443399fc84e09cfba226eZzqIjHaqv84HLXuHlUkI6Kt99JRacHNYU2Z3chdWf_r-pBsewnCEgGCKJiK4THyb";
       const map = new Map({
         basemap: "gray" // Basemap layer
       });
-
       const view = new MapView({
         map: map,
         center: [-97.7431, 30.2672], // Longitude, latitude
-        zoom: 13, // Zoom level
+        zoom: 10, // Zoom level
         container: "viewDiv" // Div element
       });
 
@@ -69,6 +68,65 @@
 
       // Add the point graphic to the map
       graphicsLayer.add(pointGraphic);
+
+      // Define the geometry for the rectangular polyline around Austin
+      const polyline = {
+        type: "polyline",
+        paths: [
+          [-97.800, 30.300], // Starting point
+          [-97.800, 30.200], // Bottom left
+          [-97.700, 30.200], // Bottom right
+          [-97.700, 30.300], // Top right
+          [-97.800, 30.300]  // Closing the path
+        ]
+      };
+
+      // Define the symbol for the polyline
+      const polylineSymbol = {
+        type: "simple-line",
+        color: [226, 119, 40], // Orange
+        width: 4
+      };
+
+      // Create the polyline graphic
+      const polylineGraphic = new Graphic({
+        geometry: polyline,
+        symbol: polylineSymbol
+      });
+
+      // Add the polyline graphic to the map
+      graphicsLayer.add(polylineGraphic);
+
+      // Define the geometry for the square polygon around the existing triangle point
+      const polygon = {
+        type: "polygon",
+        rings: [
+          [-97.751689, 30.264098], // Top left
+          [-97.751689, 30.262098], // Bottom left
+          [-97.749689, 30.262098], // Bottom right
+          [-97.749689, 30.264098], // Top right
+          [-97.751689, 30.264098]  // Closing the path
+        ]
+      };
+
+      // Define the symbol for the polygon
+      const polygonSymbol = {
+        type: "simple-fill",
+        color: [0, 0, 0, 0.1], // Semi-transparent black
+        outline: {
+          color: [0, 0, 0],
+          width: 2
+        }
+      };
+
+      // Create the polygon graphic
+      const polygonGraphic = new Graphic({
+        geometry: polygon,
+        symbol: polygonSymbol
+      });
+
+      // Add the polygon graphic to the map
+      graphicsLayer.add(polygonGraphic);
     });
 
   </script>
