@@ -25,7 +25,7 @@
 
       esriConfig.apiKey = "AAPKe367f617298443399fc84e09cfba226eZzqIjHaqv84HLXuHlUkI6Kt99JRacHNYU2Z3chdWf_r-pBsewnCEgGCKJiK4THyb";
       const map = new Map({
-        basemap: "arcgis-topographic" // Basemap layer
+        basemap: "gray" // Basemap layer
       });
 
       const view = new MapView({
@@ -51,24 +51,40 @@
 
 
    // defining the marker style
-   const simpleMarkerSymbol = {  
-  type: "simple-marker",  
-  color: [0, 0, 139],  // Color of blues rock
-  outline: {  
-    color: [255, 255, 255], // White  
-    width: 1
-  }  
-};
+   const simpleMarkerSymbol = {
+      type: "simple-marker",
+      color: [255, 0, 0], // Red color
+      style: "triangle", // Triangle shape
+      outline: {
+        color: [255, 255, 255], // White outline
+        width: 1
+      }
+    };
 
+    const popupTemplate = {
+    title: "{Name}",
+    content: "{Description}"
+ }
+ const attributes = {
+    Name: "Stevie Ray Vaughan Statue",
+    Description: "A bronze sculpture of Stevie Ray Vaughan by Ralph Helmick"
+
+ }
   // creating the point
-  const pointGraphic = new Graphic({  
-  geometry: point,  
-  symbol: simpleMarkerSymbol  
+  const polygonGraphic = new Graphic({
+      geometry: polygon,
+      symbol: polygonSymbol,
+      attributes: attributes,
+      popupTemplate: popupTemplate
+    });
+
+
+    // Add the polygon graphic to the map
+    graphicsLayer.add(polygonGraphic);
+
   });
 
- // adding the point to the graphicsLayer
-  graphicsLayer.add(pointGraphic);
-  });
+
 
   </script>
 
