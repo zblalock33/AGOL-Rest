@@ -43,24 +43,25 @@
 
 
     // defininig the geometry of the point
-    const polygon= { // create a point
-      type: "polygon",
-      longitude: -97.750689 ,
-      latitude: 30.263098    
-    };
-
+    const polygon = {
+  type: "polygon", 
+  rings: [
+    [-97.751689, 30.264098],
+    [-97.749689, 30.264098],
+    [-97.750689, 30.262098],
+    [-97.751689, 30.264098]  
+  ]
+};
 
    // defining the marker style
    const polygonSymbol = {
-      type: "simple-marker",
-      color: [255, 0, 0], // Red color
-      style: "triangle", // Triangle shape
-      outline: {
-        color: [255, 255, 255], // White outline
-        width: 1
-      }
-    };
-
+  type: "simple-fill", 
+  color: [255, 0, 0, 0.8], 
+  outline: {
+    color: [255, 255, 255], 
+    width: 1
+  }
+};
     const popupTemplate = {
     title: "{Name}",
     content: "{Description}"
@@ -72,11 +73,11 @@
  }
   // creating the point
   const polygonGraphic = new Graphic({
-      geometry: polygon,
-      symbol: polygonSymbol,
-      attributes: attributes,
-      popupTemplate: popupTemplate
-    });
+  geometry: polygon,
+  symbol: polygonSymbol,
+  attributes: attributes, 
+  popupTemplate: popupTemplate 
+});
 
 
     // Add the polygon graphic to the map
