@@ -199,7 +199,43 @@ const airportRenderer = {
 
     map.add(airportsLayer);
 
+ 
+  // Define the renderer for the heliport feature layer using the PictureMarkerSymbol
+  const heliportRenderer = {
+        type: "simple",  // autocasts as new SimpleRenderer()
+        symbol: {
+          type: "picture-marker",  // autocasts as new PictureMarkerSymbol()
+          url: "https://zblalock33.github.io/AGOL/helipad.png",
+          width: "18px",
+          height: "18px"
+        }
+      };
+
+      // Define a pop-up for the heliports layer
+      const popupHeliports = {
+        "title": "{Fac_Name}",
+        "content": "<b>Facility Type:</b> {Fac_Type}<br>" +
+                   "<b>Location ID:</b> {Loc_Id}<br>" +
+                   "<b>Effective Date:</b> {Eff_Date}<br>" +
+                   "<b>City:</b> {City}<br>" +
+                   "<b>State:</b> {State_Name}<br>" +
+                   "<b>Owner:</b> {Owner_Name}<br>" +
+                   "<b>Phone:</b> {Owner_Phon}"
+      };
+
+      // Adding the FeatureLayer for the heliports
+      const heliportsLayer = new FeatureLayer({
+        url: "https://services.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/Zachary_Blalock_US_Airports/FeatureServer",
+        outFields: ["Fac_Type", "Loc_Id", "Eff_Date", "City", "State_Name", "Owner_Name", "Owner_Phon"],
+        popupTemplate: popupHeliports,
+        renderer: heliportRenderer, 
+        definitionExpression: "Fac_Type = 'HELIPORT'"
+      });
+
+      map.add(heliportsLayer);
+
   });
+
 
   </script>
 
