@@ -126,24 +126,23 @@
       // Add the circle graphic to the map
       graphicsLayer.add(circleGraphic);
    
+// Define a pop-up for usaeduLayer
+const popupEduusa = {
+  "title": "EDUs",
+  "content": "<b>Name:</b> {NAME}<br><b>Total Enrollment:</b> {TOT_ENROLL}<br>"
+}
 
-    // Define a pop-up for usaeduLayer
-      const popupEduusa = {
-      "title": "Enrollment Info",
-      "content": "<b>Name:</b> {NAME}<br><b>Total Enrollment:</b> {TOT_ENROLL}<br>"
-    }
+//adding the Const for the feature layer
+const usaeduLayer = new FeatureLayer({
+url: "https://services2.arcgis.com/FiaPA4ga0iQKduv3/arcgis/rest/services/Colleges_and_Universities_View/FeatureServer",
 
-      //adding the Const for the feature layer
-      const usaeduLayer = new FeatureLayer({
-      url: "https://services2.arcgis.com/FiaPA4ga0iQKduv3/arcgis/rest/services/Colleges_and_Universities_View/FeatureServer",
-
-      //adding the popup here
-      outFields: ["NAME","TOT_ENROLL"],
-      popupTemplate: popupEduusa
+//adding the popup here
+outFields: ["NAME","TOT_ENROLL"],
+popupTemplate: popupEduusa
  });
 
-      //adding the feature layer to the map
-      map.add(usaeduLayer);
+//adding the feature layer to the map
+map.add(usaeduLayer);
 
 });
   </script>
