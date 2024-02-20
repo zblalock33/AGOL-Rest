@@ -28,7 +28,7 @@
       const view = new MapView({
   map: map,
   center: [-98.5795, 39.8283], // Center of the US
-  zoom: 4, // Zoom level for a US-wide view
+  zoom: 2, // Zoom level for a US-wide view
   container: "viewDiv" // Div element
 });
 
@@ -51,7 +51,7 @@
                     heliportsLayer.visible = true;
                 }
             });
-            
+
       const graphicsLayer = new GraphicsLayer();
       map.add(graphicsLayer);
 
@@ -146,6 +146,25 @@
       // Add the circle graphic to the map
       graphicsLayer.add(circleGraphic);
    
+      const universityLabels = {
+  symbol: {
+    type: "text",
+    color: "black",
+    haloColor: "white",
+    haloSize: "1px",
+    font: {
+      size: "12px",
+      family: "Arial",
+      weight: "bold"
+    }
+  },
+  labelPlacement: "above-center",
+  labelExpressionInfo: {
+    expression: "$feature.INSTNM" // Assuming INSTNM is the field name for the university name
+  }
+};
+
+usaeduLayer.labelingInfo = [universityLabels];
     
     // Define a pop-up for usaeduLayer
 const popupEduusa = {
@@ -230,6 +249,25 @@ const airportRenderer = {
 
     map.add(airportsLayer);
 
+    const heliportLabels = {
+  symbol: {
+    type: "text",
+    color: "black",
+    haloColor: "white",
+    haloSize: "1px",
+    font: {
+      size: "12px",
+      family: "Arial",
+      weight: "bold"
+    }
+  },
+  labelPlacement: "above-center",
+  labelExpressionInfo: {
+    expression: "$feature.Fac_Name" // Assuming Fac_Name is the field name for the heliport name
+  }
+};
+
+heliportsLayer.labelingInfo = [heliportLabels];
  
   // Define the renderer for the heliport feature layer using the PictureMarkerSymbol
   const heliportRenderer = {
