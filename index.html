@@ -159,21 +159,22 @@ const airportRenderer = {
 
     // Define the label class
     const airportLabels = {
-      symbol: {
-        type: "text",  
-        color: "black",
-        haloColor: "white",
-        haloSize: "1px",
-        font: {  
-          size: "12px",
-          family: "Arial",
-          weight: "bold"
-        }
-      },
-      labelPlacement: "above-center",
-      labelExpressionInfo: {
-        expression: "$feature.Fac_Name"  
-    };
+  symbol: {
+    type: "text",  
+    color: "black",
+    haloColor: "white",
+    haloSize: "1px",
+    font: {  
+      size: "12px",
+      family: "Arial",
+      weight: "bold"
+    }
+  },
+  labelPlacement: "above-center",
+  labelExpressionInfo: {
+    expression: "$feature.Fac_Name"
+  }
+};
 
     // Define a pop-up for the airports layer
     const popupAirports = {
