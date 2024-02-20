@@ -202,9 +202,9 @@ const airportRenderer = {
  
   // Define the renderer for the heliport feature layer using the PictureMarkerSymbol
   const heliportRenderer = {
-        type: "simple",  // autocasts as new SimpleRenderer()
+        type: "simple",  
         symbol: {
-          type: "picture-marker",  // autocasts as new PictureMarkerSymbol()
+          type: "picture-marker",  
           url: "https://zblalock33.github.io/AGOL/helipad.png",
           width: "18px",
           height: "18px"
@@ -261,9 +261,22 @@ const airportRenderer = {
       color: darkred !important;
       font-weight: bold !important; 
     }
+
+    #customTitle {
+      background-color: darkred;
+      color: white;
+      font-weight: bold;
+      text-align: center;
+      padding: 10px 0;
+      margin: 0;
+      font-size: 2em;
+    }
   </style>
 </head>
 <body>
+
+  <h1 id="customTitle">Your Custom Title Here</h1>
+
   <div id="viewDiv"></div>
 </body>
 </html>
