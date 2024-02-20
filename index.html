@@ -142,6 +142,17 @@ outFields: ["INSTNM","INSTSIZE","WEBADDR"],
 popupTemplate: popupEduusa
  });
 
+ const collegeRenderer = {
+  type: "simple", // autocasts as new SimpleRenderer()
+  symbol: {
+    type: "picture-marker", // autocasts as new PictureMarkerSymbol()
+    url: "https://zblalock33.github.io/AGOL/outline_school_black_24dp.png",
+    width: "16px",
+    height: "16px"
+  }
+};
+
+usaeduLayer.renderer= collegeRenderer
 //adding the feature layer to the map
 map.add(usaeduLayer);
 
