@@ -32,6 +32,26 @@
   container: "viewDiv" // Div element
 });
 
+
+            // Define the dropdown element and event listener
+            document.getElementById('categorySelect').addEventListener('change', function(event) {
+                var selectedCategory = event.target.value;
+                
+                // Initially set all layers to not visible
+                usaeduLayer.visible = false;
+                airportsLayer.visible = false;
+                heliportsLayer.visible = false;
+                
+                // Enable visibility based on selection
+                if (selectedCategory === 'colleges') {
+                    usaeduLayer.visible = true;
+                } else if (selectedCategory === 'airports') {
+                    airportsLayer.visible = true;
+                } else if (selectedCategory === 'heliports') {
+                    heliportsLayer.visible = true;
+                }
+            });
+            
       const graphicsLayer = new GraphicsLayer();
       map.add(graphicsLayer);
 
@@ -287,7 +307,11 @@ const airportRenderer = {
 <body>
 
   <h1 id="customTitle">Zachary's JS Stack Read</h1>
-
-  <div id="viewDiv"></div>
+  <select id="categorySelect">
+    <option value="colleges">Colleges and Universities</option>
+    <option value="airports">Airports</option>
+    <option value="heliports">Heliports</option>
+</select>
+<div id="viewDiv"></div>
 </body>
 </html>
