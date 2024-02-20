@@ -26,11 +26,11 @@
         basemap: "gray" // Basemap layer
       });
       const view = new MapView({
-        map: map,
-        center: [-97.7431, 30.2672], // Longitude, latitude
-        zoom: 10, // Zoom level
-        container: "viewDiv" // Div element
-      });
+  map: map,
+  center: [-98.5795, 39.8283], // Center of the US
+  zoom: 4, // Zoom level for a US-wide view
+  container: "viewDiv" // Div element
+});
 
       const graphicsLayer = new GraphicsLayer();
       map.add(graphicsLayer);
@@ -147,8 +147,8 @@ popupTemplate: popupEduusa
   symbol: {
     type: "picture-marker", // autocasts as new PictureMarkerSymbol()
     url: "https://zblalock33.github.io/AGOL/outline_school_black_24dp.png",
-    width: "16px",
-    height: "16px"
+    width: "16",
+    height: "16"
   }
 };
 
@@ -163,8 +163,8 @@ const airportRenderer = {
       symbol: {
         type: "picture-marker",  // autocasts as new PictureMarkerSymbol()
         url: "https://zblalock33.github.io/AGOL/outline_local_airport_black_24dp.png",
-        width: "18px",
-        height: "18px"
+        width: "18",
+        height: "18"
       }
     };
 
@@ -176,7 +176,7 @@ const airportRenderer = {
     haloColor: "white",
     haloSize: "1px",
     font: {  
-      size: "12px",
+      size: "12",
       family: "Arial",
       weight: "bold"
     }
@@ -217,8 +217,8 @@ const airportRenderer = {
         symbol: {
           type: "picture-marker",  
           url: "https://zblalock33.github.io/AGOL/helipad.png",
-          width: "18px",
-          height: "18px"
+          width: "18",
+          height: "18"
         }
       };
 
