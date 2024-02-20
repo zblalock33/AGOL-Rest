@@ -128,14 +128,20 @@
 
       // Define a pop-up for the airports layer
       const popupAirports = {
-        "title": "Airport Information",
-        "content": "<b>Name:</b> {NAME}<br><b>City:</b> {CITY}<br><b>State:</b> {STATE}<br><b>Website:</b> <a href='{URL}' target='_blank'>{URL}</a>"
+        "title": "{Fac_Name}",
+        "content": "<b>Facility Type:</b> {Fac_Type}<br>" +
+                   "<b>Location ID:</b> {Loc_Id}<br>" +
+                   "<b>Effective Date:</b> {Eff_Date}<br>" +
+                   "<b>City:</b> {City}<br>" +
+                   "<b>State:</b> {State_Name}<br>" +
+                   "<b>Owner:</b> {Owner_Name}<br>" +
+                   "<b>Phone:</b> {Owner_Phon}"
       }
 
       // Adding the FeatureLayer for the airports
       const airportsLayer = new FeatureLayer({
         url: "https://services.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/Zachary_Blalock_US_Airports/FeatureServer",
-        outFields: ["NAME", "CITY", "STATE", "URL"],
+        outFields: ["Fac_Type", "Loc_Id", "Eff_Date", "City", "State_Name", "Owner_Name", "Owner_Phon"],
         popupTemplate: popupAirports
       });
 
@@ -143,6 +149,7 @@
       map.add(airportsLayer);
 
 });
+
   </script>
 
 <style>
