@@ -5,39 +5,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="description" content="" />
+
+  <!-- calls for the arcgis api's CSS file and JS library. -->
   <link rel="stylesheet" href="https://js.arcgis.com/4.25/esri/themes/light/main.css">
   <script src="https://js.arcgis.com/4.25/"></script>
-
-  <style>
-    html, body, #viewDiv {
-      padding: 0;
-      margin: 0;
-      height: 100%;
-      width: 100%;
-    }
-
-    #mapTitle {
-      position: absolute;
-      top: 10px; 
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 10; 
-      background-color: rgba(255, 255, 255, 0.8); /
-      padding: 5px 10px;
-      border-radius: 5px;
-      font-size: 20px;
-      color: #000; 
-    }
-
-   
-    body {
-      position: relative;
-    }
-  </style>
-</head>
-<body>
-  <div id="mapTitle">Hello, AGOL!</div>
-  <div id="viewDiv"></div>
 
   <script>
   require([
@@ -46,7 +17,7 @@
   "esri/views/MapView",
   "esri/Graphic",
   "esri/layers/GraphicsLayer",
-  "esri/geometry/Circle",
+  "esri/geometry/Circle" 
   "esri/layers/FeatureLayer"
 ], function (esriConfig, Map, MapView, Graphic, GraphicsLayer, Circle,FeatureLayer ) { 
 
@@ -154,52 +125,34 @@
 
       // Add the circle graphic to the map
       graphicsLayer.add(circleGraphic);
-   
-// Define a pop-up for usaeduLayer
-const popupEduusa = {
-  "title": "Institution Information",
-  "content": "<b>Name:</b> {INSTNM}<br><b>Total Enrollment:</b> {INSTSIZE}<br><b>Website:</b> <a href='https://{WEBADDR}' target='_blank'>{WEBADDR}</a>"
-}
+    });
+    
 
-//adding the Const for the feature layer
-const usaeduLayer = new FeatureLayer({
-url: "https://services2.arcgis.com/FiaPA4ga0iQKduv3/arcgis/rest/services/Colleges_and_Universities_View/FeatureServer",
-
-//adding the popup here
-outFields: ["INSTNM","INSTSIZE","WEBADDR"],
-popupTemplate: popupEduusa
- });
-
-//adding the feature layer to the map
-map.add(usaeduLayer);
-
-});
   </script>
 
-  <style>
-    html, body, #viewDiv {
-      padding: 0;
-      margin: 0;
-      height: 100%;
-      width: 100%;
-    }
+<style>
+  html, body, #viewDiv {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+  }
 
-    .esri-popup__header {
-  background-color: darkred !important;
-  color: whitesmoke !important;
-  border-bottom: 1px solid black !important;
-}
+  .esri-popup__header {
+    background-color: darkred !important;
+    color: white !important; 
+    border-bottom: 1px solid black !important;
+  }
 
-.esri-popup__header-title {
-  font-weight: bold !important;
-}
+  .esri-popup__header-title {
+    font-weight: bold !important;
+  }
 
-.esri-popup__content {
-  color: darkred !important;
-  font-weight: bold !important;
-  border-color: black !important; /* This might not work as expected */
-}
-  </style>
+  .esri-popup__content {
+    color: darkred !important;
+    font-weight: bold !important; 
+  }
+</style>
 </head>
 <body>
   <div id="viewDiv"></div>
