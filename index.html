@@ -1,48 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Hello, AGOL!</title>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="" />
+    <title>Hello, AGOL!</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="description" content="" />
+    <!-- calls for the arcgis api's CSS file and JS library. -->
+    <link rel="stylesheet" href="https://js.arcgis.com/4.25/esri/themes/light/main.css">
+    <script src="https://js.arcgis.com/4.25/"></script>
+    <script>
+        require([
+            "esri/config",
+            "esri/Map",
+            "esri/views/MapView",
+            "esri/Graphic",
+            "esri/layers/GraphicsLayer",
+            "esri/geometry/Circle",
+            "esri/layers/FeatureLayer"
+        ], function (esriConfig, Map, MapView, Graphic, GraphicsLayer, Circle, FeatureLayer) {
+            esriConfig.apiKey = "AAPKe367f617298443399fc84e09cfba226eZzqIjHaqv84HLXuHlUkI6Kt99JRacHNYU2Z3chdWf_r-pBsewnCEgGCKJiK4THyb";
+            const map = new Map({
+                basemap: "gray" // Basemap layer
+            });
+            const view = new MapView({
+                map: map,
+                center: [-98.5795, 39.8283], // Center of the US
+                zoom: 2, // Zoom level for a US-wide view
+                container: "viewDiv" // Div element
+            });
 
-  <!-- calls for the arcgis api's CSS file and JS library. -->
-  <link rel="stylesheet" href="https://js.arcgis.com/4.25/esri/themes/light/main.css">
-  <script src="https://js.arcgis.com/4.25/"></script>
-
-  <script>
-  require([
-  "esri/config",
-  "esri/Map",
-  "esri/views/MapView",
-  "esri/Graphic",
-  "esri/layers/GraphicsLayer",
-  "esri/geometry/Circle",
-  "esri/layers/FeatureLayer"
-], function (esriConfig, Map, MapView, Graphic, GraphicsLayer, Circle,FeatureLayer) { 
-
-      esriConfig.apiKey = "AAPKe367f617298443399fc84e09cfba226eZzqIjHaqv84HLXuHlUkI6Kt99JRacHNYU2Z3chdWf_r-pBsewnCEgGCKJiK4THyb";
-      const map = new Map({
-        basemap: "gray" // Basemap layer
-      });
-      const view = new MapView({
-  map: map,
-  center: [-98.5795, 39.8283], // Center of the US
-  zoom: 4, // Zoom level for a US-wide view
-  container: "viewDiv" // Div element
-});
-
-
-            // Define the dropdown element and event listener
-            document.getElementById('categorySelect').addEventListener('change', function(event) {
+            document.getElementById('categorySelect').addEventListener('change', function (event) {
                 var selectedCategory = event.target.value;
-                
-                // Initially set all layers to not visible
                 usaeduLayer.visible = false;
                 airportsLayer.visible = false;
                 heliportsLayer.visible = false;
-                
-                // Enable visibility based on selection
+
                 if (selectedCategory === 'colleges') {
                     usaeduLayer.visible = true;
                 } else if (selectedCategory === 'airports') {
@@ -51,267 +43,269 @@
                     heliportsLayer.visible = true;
                 }
             });
-            
-      const graphicsLayer = new GraphicsLayer();
-      map.add(graphicsLayer);
 
-      // Defining the geometry of the point
-      const point = {
-        type: "point",
-        longitude: -97.750689,
-        latitude: 30.263098
-      };
+            const graphicsLayer = new GraphicsLayer();
+            map.add(graphicsLayer);
 
-      // Defining the marker style
-      const pointSymbol = {
-        type: "simple-marker",
-        color: [139, 0, 0], 
-        size: "12px",
-        style: "triangle" 
-      };
+            const point = {
+                type: "point",
+                longitude: -97.750689,
+                latitude: 30.263098
+            };
 
-      const popupTemplate = {
-        title: "{Name}",
-        content: "{Description}"
-      };
+            const pointSymbol = {
+                type: "simple-marker",
+                color: [139, 0, 0],
+                size: "12px",
+                style: "triangle"
+            };
 
-      const attributes = {
-        Name: "Stevie Ray Vaughan Statue",
-        Description: "A bronze sculpture of Stevie Ray Vaughan by Ralph Helmick"
-      };
+            const popupTemplate = {
+                title: "{Name}",
+                content: "{Description}"
+            };
 
-      // Creating the point graphic
-      const pointGraphic = new Graphic({
-        geometry: point,
-        symbol: pointSymbol,
-        attributes: attributes,
-        popupTemplate: popupTemplate
-      });
+            const attributes = {
+                Name: "Stevie Ray Vaughan Statue",
+                Description: "A bronze sculpture of Stevie Ray Vaughan by Ralph Helmick"
+            };
 
-      // Add the point graphic to the map
-      graphicsLayer.add(pointGraphic);
+            const pointGraphic = new Graphic({
+                geometry: point,
+                symbol: pointSymbol,
+                attributes: attributes,
+                popupTemplate: popupTemplate
+            });
 
-      // Define the geometry for the rectangular polyline around Austin
-      const polyline = {
-        type: "polyline",
-        paths: [
-          [-97.800, 30.300],
-          [-97.800, 30.200], 
-          [-97.700, 30.200], 
-          [-97.700, 30.300], 
-          [-97.800, 30.300]  
-        ]
-      };
+            graphicsLayer.add(pointGraphic);
 
-      // Define the symbol for the polyline
-      const polylineSymbol = {
-        type: "simple-line",
-        color: [226, 119, 40], 
-        width: 4
-      };
+            const polyline = {
+                type: "polyline",
+                paths: [
+                    [-97.800, 30.300],
+                    [-97.800, 30.200],
+                    [-97.700, 30.200],
+                    [-97.700, 30.300],
+                    [-97.800, 30.300]
+                ]
+            };
 
-      // Create the polyline graphic
-      const polylineGraphic = new Graphic({
-        geometry: polyline,
-        symbol: polylineSymbol
-      });
+            const polylineSymbol = {
+                type: "simple-line",
+                color: [226, 119, 40],
+                width: 4
+            };
 
-      // Add the polyline graphic to the map
-      graphicsLayer.add(polylineGraphic);
+            const polylineGraphic = new Graphic({
+                geometry: polyline,
+                symbol: polylineSymbol
+            });
 
-      // Create a circle around the point
-      const circleGeometry = new Circle({
-        center: point, // Center of the circle
-        radius: 40, // Radius 
-        numberOfPoints: 100,
-        spatialReference: view.spatialReference
-      });
+            graphicsLayer.add(polylineGraphic);
 
-      // Define the symbol for the circle
-      const circleSymbol = {
-        type: "simple-fill",
-        color: [0, 0, 255, 0.2], 
-        outline: {
-          color: [0, 0, 255],
-          width: 2
+            const circleGeometry = new Circle({
+                center: point,
+                radius: 40,
+                numberOfPoints: 100,
+                spatialReference: view.spatialReference
+            });
+
+            const circleSymbol = {
+                type: "simple-fill",
+                color: [0, 0, 255, 0.2],
+                outline: {
+                    color: [0, 0, 255],
+                    width: 2
+                }
+            };
+
+            const circleGraphic = new Graphic({
+                geometry: circleGeometry,
+                symbol: circleSymbol
+            });
+
+            graphicsLayer.add(circleGraphic);
+
+            const popupEduusa = {
+                "title": "Institution Information",
+                "content": "<b>Name:</b> {INSTNM}<br><b>Total Enrollment:</b> {INSTSIZE}<br><b>Website:</b> <a href='https://{WEBADDR}.com' target='_blank'>{WEBADDR}</a>"
+            }
+
+            const usaeduLayer = new FeatureLayer({
+                url: "https://services2.arcgis.com/FiaPA4ga0iQKduv3/arcgis/rest/services/Colleges_and_Universities_View/FeatureServer",
+                outFields: ["INSTNM", "INSTSIZE", "WEBADDR"],
+                popupTemplate: popupEduusa,
+                renderer: {
+                    type: "simple",
+                    symbol: {
+                        type: "picture-marker",
+                        url: "https://zblalock33.github.io/AGOL/outline_school_black_24dp.png",
+                        width: "16",
+                        height: "16"
+                    }
+                },
+                labelingInfo: [{
+                    symbol: {
+                        type: "text",
+                        color: "black",
+                        haloColor: "white",
+                        haloSize: "1px",
+                        font: {
+                            size: "12px",
+                            family: "Arial",
+                            weight: "bold"
+                        }
+                    },
+                    labelPlacement: "above-center",
+                    labelExpressionInfo: {
+                        expression: "$feature.INSTNM"
+                    }
+                }]
+            });
+
+            map.add(usaeduLayer);
+
+            const airportRenderer = {
+                type: "simple",
+                symbol: {
+                    type: "picture-marker",
+                    url: "https://zblalock33.github.io/AGOL/outline_local_airport_black_24dp.png",
+                    width: "18",
+                    height: "18"
+                }
+            };
+
+            const airportLabels = {
+                symbol: {
+                    type: "text",
+                    color: "black",
+                    haloColor: "white",
+                    haloSize: "1px",
+                    font: {
+                        size: "12",
+                        family: "Arial",
+                        weight: "bold"
+                    }
+                },
+                labelPlacement: "above-center",
+                labelExpressionInfo: {
+                    expression: "$feature.Fac_Name"
+                }
+            };
+
+            const popupAirports = {
+                "title": "{Fac_Name}",
+                "content": "<b>Facility Type:</b> {Fac_Type}<br>" +
+                    "<b>Location ID:</b> {Loc_Id}<br>" +
+                    "<b>Effective Date:</b> {Eff_Date}<br>" +
+                    "<b>City:</b> {City}<br>" +
+                    "<b>State:</b> {State_Name}<br>" +
+                    "<b>Owner:</b> {Owner_Name}<br>" +
+                    "<b>Phone:</b> {Owner_Phon}"
+            };
+
+            const airportsLayer = new FeatureLayer({
+                url: "https://services.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/Zachary_Blalock_US_Airports/FeatureServer",
+                outFields: ["Fac_Type", "Loc_Id", "Eff_Date", "City", "State_Name", "Owner_Name", "Owner_Phon"],
+                popupTemplate: popupAirports,
+                renderer: airportRenderer,
+                definitionExpression: "Fac_Type = 'AIRPORT'",
+                labelingInfo: [airportLabels]
+            });
+
+            map.add(airportsLayer);
+
+            const heliportRenderer = {
+                type: "simple",
+                symbol: {
+                    type: "picture-marker",
+                    url: "https://zblalock33.github.io/AGOL/helipad.png",
+                    width: "18",
+                    height: "18"
+                }
+            };
+
+            const popupHeliports = {
+                "title": "{Fac_Name}",
+                "content": "<b>Facility Type:</b> {Fac_Type}<br>" +
+                    "<b>Location ID:</b> {Loc_Id}<br>" +
+                    "<b>Effective Date:</b> {Eff_Date}<br>" +
+                    "<b>City:</b> {City}<br>" +
+                    "<b>State:</b> {State_Name}<br>" +
+                    "<b>Owner:</b> {Owner_Name}<br>" +
+                    "<b>Phone:</b> {Owner_Phon}"
+            };
+
+            const heliportsLayer = new FeatureLayer({
+                url: "https://services.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/Zachary_Blalock_US_Airports/FeatureServer",
+                outFields: ["Fac_Type", "Loc_Id", "Eff_Date", "City", "State_Name", "Owner_Name", "Owner_Phon"],
+                popupTemplate: popupHeliports,
+                renderer: heliportRenderer,
+                definitionExpression: "Fac_Type = 'HELIPORT'",
+                labelingInfo: [{
+                    symbol: {
+                        type: "text",
+                        color: "black",
+                        haloColor: "white",
+                        haloSize: "1px",
+                        font: {
+                            size: "12px",
+                            family: "Arial",
+                            weight: "bold"
+                        }
+                    },
+                    labelPlacement: "above-center",
+                    labelExpressionInfo: {
+                        expression: "$feature.Fac_Name"
+                    }
+                }]
+            });
+
+            map.add(heliportsLayer);
+        });
+    </script>
+    <style>
+        html, body, #viewDiv {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+            width: 100%;
         }
-      };
-
-      // Create the circle graphic
-      const circleGraphic = new Graphic({
-        geometry: circleGeometry,
-        symbol: circleSymbol
-      });
-
-      // Add the circle graphic to the map
-      graphicsLayer.add(circleGraphic);
-   
-    
-    // Define a pop-up for usaeduLayer
-const popupEduusa = {
-  "title": "Institution Information",
-  "content": "<b>Name:</b> {INSTNM}<br><b>Total Enrollment:</b> {INSTSIZE}<br><b>Website:</b> <a href='https://{WEBADDR}.com' target='_blank'>{WEBADDR}</a>"
-}
-
-//adding the Const for the feature layer
-const usaeduLayer = new FeatureLayer({
-url: "https://services2.arcgis.com/FiaPA4ga0iQKduv3/arcgis/rest/services/Colleges_and_Universities_View/FeatureServer",
-
-//adding the popup here
-outFields: ["INSTNM","INSTSIZE","WEBADDR"],
-popupTemplate: popupEduusa
- });
-
- const collegeRenderer = {
-  type: "simple", // autocasts as new SimpleRenderer()
-  symbol: {
-    type: "picture-marker", // autocasts as new PictureMarkerSymbol()
-    url: "https://zblalock33.github.io/AGOL/outline_school_black_24dp.png",
-    width: "16",
-    height: "16"
-  }
-};
-
-usaeduLayer.renderer= collegeRenderer
-//adding the feature layer to the map
-map.add(usaeduLayer);
-
-
-// Define the renderer for the airport feature layer using the PictureMarkerSymbol
-const airportRenderer = {
-      type: "simple",  // autocasts as new SimpleRenderer()
-      symbol: {
-        type: "picture-marker",  // autocasts as new PictureMarkerSymbol()
-        url: "https://zblalock33.github.io/AGOL/outline_local_airport_black_24dp.png",
-        width: "18",
-        height: "18"
-      }
-    };
-
-    // Define the label class
-    const airportLabels = {
-  symbol: {
-    type: "text",  
-    color: "black",
-    haloColor: "white",
-    haloSize: "1px",
-    font: {  
-      size: "12",
-      family: "Arial",
-      weight: "bold"
-    }
-  },
-  labelPlacement: "above-center",
-  labelExpressionInfo: {
-    expression: "$feature.Fac_Name"
-  }
-};
-
-    // Define a pop-up for the airports layer
-    const popupAirports = {
-  "title": "{Fac_Name}",
-  "content": "<b>Facility Type:</b> {Fac_Type}<br>" +
-             "<b>Location ID:</b> {Loc_Id}<br>" +
-             "<b>Effective Date:</b> {Eff_Date}<br>" +
-             "<b>City:</b> {City}<br>" +
-             "<b>State:</b> {State_Name}<br>" +
-             "<b>Owner:</b> {Owner_Name}<br>" +
-             "<b>Phone:</b> {Owner_Phon}"
-};
-    // Adding the FeatureLayer for the airports
-    const airportsLayer = new FeatureLayer({
-      url: "https://services.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/Zachary_Blalock_US_Airports/FeatureServer",
-      outFields: ["Fac_Type", "Loc_Id", "Eff_Date", "City", "State_Name", "Owner_Name", "Owner_Phon"],
-      popupTemplate: popupAirports,
-      renderer: airportRenderer, 
-      definitionExpression: "Fac_Type = 'AIRPORT'", 
-      labelingInfo: [airportLabels]
-    });
-
-    map.add(airportsLayer);
-
- 
-  // Define the renderer for the heliport feature layer using the PictureMarkerSymbol
-  const heliportRenderer = {
-        type: "simple",  
-        symbol: {
-          type: "picture-marker",  
-          url: "https://zblalock33.github.io/AGOL/helipad.png",
-          width: "18",
-          height: "18"
+        .esri-popup__header {
+            background-color: darkred !important;
+            color: white !important;
+            border-bottom: 1px solid black !important;
         }
-      };
-
-      // Define a pop-up for the heliports layer
-      const popupHeliports = {
-        "title": "{Fac_Name}",
-        "content": "<b>Facility Type:</b> {Fac_Type}<br>" +
-                   "<b>Location ID:</b> {Loc_Id}<br>" +
-                   "<b>Effective Date:</b> {Eff_Date}<br>" +
-                   "<b>City:</b> {City}<br>" +
-                   "<b>State:</b> {State_Name}<br>" +
-                   "<b>Owner:</b> {Owner_Name}<br>" +
-                   "<b>Phone:</b> {Owner_Phon}"
-      };
-
-      // Adding the FeatureLayer for the heliports
-      const heliportsLayer = new FeatureLayer({
-        url: "https://services.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/Zachary_Blalock_US_Airports/FeatureServer",
-        outFields: ["Fac_Type", "Loc_Id", "Eff_Date", "City", "State_Name", "Owner_Name", "Owner_Phon"],
-        popupTemplate: popupHeliports,
-        renderer: heliportRenderer, 
-        definitionExpression: "Fac_Type = 'HELIPORT'"
-      });
-
-      map.add(heliportsLayer);
-
-  });
-
-
-  </script>
-
-  <style>
-    html, body, #viewDiv {
-      padding: 0;
-      margin: 0;
-      height: 100%;
-      width: 100%;
-    }
-
-    .esri-popup__header {
-      background-color: darkred !important;
-      color: white !important; 
-      border-bottom: 1px solid black !important;
-    }
-
-    .esri-popup__header-title {
-      font-weight: bold !important;
-    }
-
-    .esri-popup__content {
-      color: darkred !important;
-      font-weight: bold !important; 
-    }
-
-    #customTitle {
-      background-color: darkred;
-      color: white;
-      font-weight: bold;
-      text-align: center;
-      padding: 10px 0;
-      margin: 0;
-      font-size: 2em;
-    }
-  </style>
+        .esri-popup__header-title {
+            font-weight: bold !important;
+        }
+        .esri-popup__content {
+            color: darkred !important;
+            font-weight: bold !important;
+        }
+        #categorySelect {
+            background-color: darkred;
+            color: black;
+            font-weight: bold;
+        }
+        #customTitle {
+            background-color: darkred;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px 0;
+            margin: 0;
+            font-size: 2em;
+        }
+    </style>
 </head>
 <body>
-
-  <h1 id="customTitle">Zachary's JS Stack Read</h1>
-  <select id="categorySelect">
-    <option value="colleges">Colleges and Universities</option>
-    <option value="airports">Airports</option>
-    <option value="heliports">Heliports</option>
-</select>
-<div id="viewDiv"></div>
+    <h1 id="customTitle">Zachary's JS Stack Read</h1>
+    <select id="categorySelect">
+        <option value="colleges">Colleges and Universities</option>
+        <option value="airports">Airports</option>
+        <option value="heliports">Heliports</option>
+    </select>
+    <div id="viewDiv"></div>
 </body>
 </html>
