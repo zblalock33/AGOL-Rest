@@ -16,8 +16,12 @@
             "esri/Graphic",
             "esri/layers/GraphicsLayer",
             "esri/geometry/Circle",
-            "esri/layers/FeatureLayer"
-        ], function (esriConfig, Map, MapView, Graphic, GraphicsLayer, Circle, FeatureLayer) {
+            "esri/layers/FeatureLayer",
+
+            // adding editor widget
+            "esri/widgets/Editor"
+
+        ], function (esriConfig, Map, MapView, Graphic, GraphicsLayer, Circle, FeatureLayer, Editor) {
             esriConfig.apiKey = "AAPKe367f617298443399fc84e09cfba226eZzqIjHaqv84HLXuHlUkI6Kt99JRacHNYU2Z3chdWf_r-pBsewnCEgGCKJiK4THyb";
             const map = new Map({
                 basemap: "gray" // Basemap layer
@@ -262,7 +266,36 @@
             });
 
             map.add(heliportsLayer);
-        });
+       
+
+        //adding the const for the feature layer
+const myAirports = new FeatureLayer({
+ url: "https://services.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/My_Airports_Blalock/FeatureServer",
+ 
+ //adding the popup here
+ outFields: ["AirportCode"],
+
+});
+
+//adding the feature layer to the map
+map.add(myAirports);
+
+// Set the point layer's LayerInfo
+const pointInfos = {
+ layer: myAirports
+}
+
+// Begin Editor constructor
+const editor = new Editor({
+ view: view,
+ layerInfos: [pointInfos]
+ }); // End Editor constructor
+
+// Add the widget to the view
+view.ui.add(editor, "top-right");
+
+
+});
     </script>
     <style>
         html, body, #viewDiv {
