@@ -13,10 +13,11 @@
             "esri/Map",
             "esri/views/MapView",
             "esri/layers/FeatureLayer",
-            "esri/widgets/Editor"
-        ], function (esriConfig, Map, MapView, FeatureLayer, Editor) {
-            esriConfig.apiKey = "YOUR_API_KEY_HERE";
-
+            "esri/widgets/Editor",
+            "esri/widgets/Legend"
+        ], function (esriConfig, Map, MapView, FeatureLayer, Editor, Legend) {
+            esriConfig.apiKey = "AAPKe367f617298443399fc84e09cfba226eZzqIjHaqv84HLXuHlUkI6Kt99JRacHNYU2Z3chdWf_r-pBsewnCEgGCKJiK4THyb";
+            
             const map = new Map({
                 basemap: "gray"
             });
@@ -28,34 +29,57 @@
                 container: "viewDiv"
             });
 
-            const popupAirports = {
-                "title": "{Fac_Name}",
-                "content": "<b>Facility Type:</b> {Fac_Type}<br>" +
-                           "<b>Location ID:</b> {Loc_Id}<br>" +
-                           "<b>Effective Date:</b> {Eff_Date}<br>" +
-                           "<b>City:</b> {City}<br>" +
-                           "<b>State:</b> {State_Name}<br>" +
-                           "<b>Owner:</b> {Owner_Name}<br>" +
-                           "<b>Phone:</b> {Owner_Phon}"
+            const airportRenderer = {
+                type: "simple",
+                symbol: {
+                    type: "picture-marker",
+                    url: "https://zblalock33.github.io/AGOL/outline_local_airport_black_24dp.png",
+                    width: "12",
+                    height: "12"
+                }
+            };
+
+            const airportLabels = {
+                symbol: {
+                    type: "text",
+                    color: "black",
+                    haloColor: "white",
+                    haloSize: "1px",
+                    font: {
+                        size: "8",
+                        family: "Arial",
+                        weight: "bold"
+                    }
+                },
+                labelPlacement: "above-center",
+                labelExpressionInfo: {
+                    expression: "$feature.AirportCode"
+                }
             };
 
             const myAirports = new FeatureLayer({
                 url: "https://services.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/My_Airports_Blalock/FeatureServer",
-                outFields: ["Fac_Type", "Loc_Id", "Eff_Date", "City", "State_Name", "Owner_Name", "Owner_Phon"],
-                popupTemplate: popupAirports
+                renderer: airportRenderer,
+                labelingInfo: [airportLabels],
+                outFields: ["AirportCode"]
             });
 
-            // Only add the layer through the Editor widget, not directly to the map
-            // map.add(myAirports);
+            map.add(myAirports);
+
+            const legend = new Legend({
+                view: view,
+                layerInfos: [{
+                    layer: myAirports,
+                    title: "My Airports"
+                }]
+            });
+
+            view.ui.add(legend, "bottom-right");
 
             const editor = new Editor({
                 view: view,
                 layerInfos: [{
-                    layer: myAirports,
-                    enablePopup: true,
-                    addEnabled: true,
-                    updateEnabled: true,
-                    deleteEnabled: true
+                    layer: myAirports
                 }]
             });
 
@@ -69,10 +93,31 @@
             height: 100%;
             width: 100%;
         }
+        .esri-popup__header {
+            background-color: darkred !important;
+            color: white !important;
+            border-bottom: 1px solid black !important;
+        }
+        .esri-popup__header-title {
+            font-weight: bold !important;
+        }
+        .esri-popup__content {
+            color: darkred !important;
+            font-weight: bold !important;
+        }
+        #customTitle {
+            background-color: darkred;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px 0;
+            margin: 0;
+            font-size: 2em;
+        }
     </style>
 </head>
 <body>
-    <h1>Hello, AGOL Write this to the database for me</h1>
+    <h1 id="customTitle">Zachary's JS Stack Read</h1>
     <div id="viewDiv"></div>
 </body>
 </html>
