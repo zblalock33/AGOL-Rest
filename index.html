@@ -33,21 +33,6 @@
                 container: "viewDiv" // Div element
             });
 
-            document.getElementById('categorySelect').addEventListener('change', function (event) {
-                var selectedCategory = event.target.value;
-                usaeduLayer.visible = false;
-                airportsLayer.visible = false;
-                heliportsLayer.visible = false;
-
-                if (selectedCategory === 'colleges') {
-                    usaeduLayer.visible = true;
-                } else if (selectedCategory === 'airports') {
-                    airportsLayer.visible = true;
-                } else if (selectedCategory === 'heliports') {
-                    heliportsLayer.visible = true;
-                }
-            });
-
             const graphicsLayer = new GraphicsLayer();
             map.add(graphicsLayer);
 
@@ -316,13 +301,7 @@ view.ui.add(editor, "top-right");
             color: darkred !important;
             font-weight: bold !important;
         }
-        #categorySelect {
-            background-color: darkred;
-            color: whitesmoke;
-            font-weight: bold;
-            font-size: 25px;
-            border: black;
-        }
+
         #customTitle {
             background-color: darkred;
             color: white;
@@ -336,11 +315,6 @@ view.ui.add(editor, "top-right");
 </head>
 <body>
     <h1 id="customTitle">Zachary's JS Stack Read</h1>
-    <select id="categorySelect">
-        <option value="colleges">Colleges and Universities</option>
-        <option value="airports">Airports</option>
-        <option value="heliports">Heliports</option>
-    </select>
     <div id="viewDiv"></div>
 </body>
 </html>
