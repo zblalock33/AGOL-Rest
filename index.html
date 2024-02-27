@@ -57,11 +57,33 @@
                 }
             };
 
+            // Define the popupTemplate for the myAirports layer
+            const popupTemplate = {
+                title: "{Name}",
+                content: [
+                    {
+                        type: "fields",
+                        fieldInfos: [
+                            {
+                                fieldName: "AirportCode",
+                                label: "Airport Code"
+                            },
+                            {
+                                fieldName: "Fac_Name",
+                                label: "Facility Name"
+                            },
+                            // Add other fields as needed
+                        ]
+                    }
+                ]
+            };
+
             const myAirports = new FeatureLayer({
                 url: "https://services.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/My_Airports_Blalock/FeatureServer",
                 renderer: airportRenderer,
                 labelingInfo: [airportLabels],
-                outFields: ["AirportCode"]
+                outFields: ["*"], // Adjust as needed to include fields used in the popup
+                popupTemplate: popupTemplate // Assign the popupTemplate to the layer
             });
 
             map.add(myAirports);
