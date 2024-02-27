@@ -7,3 +7,6 @@ This lab will take you through the process of creating a JavaScript-only GeoSpat
 Challenge 1 - Change the symbol for your myAirport layer to an icon.  (10 points)
 Challenge 2 - Add a label to your myAirport showing the Airport code. (10 points)
 Challenge 3 - Review this widget - https://developers.arcgis.com/javascript/latest/api-reference/esri-widgets-Legend.htmlLinks to an external site.. Add a legend to your map.  (20 points)
+
+
+esriConfig.apiKey = "AAPKe367f617298443399fc84e09cfba226eZzqIjHaqv84HLXuHlUkI6Kt99JRacHNYU2Z3chdWf_r-pBsewnCEgGCKJiK4THyb";

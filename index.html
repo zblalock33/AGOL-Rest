@@ -5,7 +5,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta name="description" content="" />
-    <!-- calls for the arcgis api's CSS file and JS library. -->
     <link rel="stylesheet" href="https://js.arcgis.com/4.25/esri/themes/light/main.css">
     <script src="https://js.arcgis.com/4.25/"></script>
     <script>
@@ -13,146 +12,22 @@
             "esri/config",
             "esri/Map",
             "esri/views/MapView",
-            "esri/Graphic",
-            "esri/layers/GraphicsLayer",
-            "esri/geometry/Circle",
             "esri/layers/FeatureLayer",
-
-            // adding editor widget
-            "esri/widgets/Editor"
-
-        ], function (esriConfig, Map, MapView, Graphic, GraphicsLayer, Circle, FeatureLayer, Editor) {
+            "esri/widgets/Editor",
+            "esri/widgets/Legend"
+        ], function (esriConfig, Map, MapView, FeatureLayer, Editor, Legend) {
             esriConfig.apiKey = "AAPKe367f617298443399fc84e09cfba226eZzqIjHaqv84HLXuHlUkI6Kt99JRacHNYU2Z3chdWf_r-pBsewnCEgGCKJiK4THyb";
+            
             const map = new Map({
-                basemap: "gray" // Basemap layer
+                basemap: "gray"
             });
+
             const view = new MapView({
                 map: map,
-                center: [-98.5795, 39.8283], // Center of the US
-                zoom: 3, // Zoom level for a US-wide view
-                container: "viewDiv" // Div element
+                center: [-98.5795, 39.8283],
+                zoom: 3,
+                container: "viewDiv"
             });
-
-            const graphicsLayer = new GraphicsLayer();
-            map.add(graphicsLayer);
-
-            const point = {
-                type: "point",
-                longitude: -97.750689,
-                latitude: 30.263098
-            };
-
-            const pointSymbol = {
-                type: "simple-marker",
-                color: [139, 0, 0],
-                size: "12px",
-                style: "triangle"
-            };
-
-            const popupTemplate = {
-                title: "{Name}",
-                content: "{Description}"
-            };
-
-            const attributes = {
-                Name: "Stevie Ray Vaughan Statue",
-                Description: "A bronze sculpture of Stevie Ray Vaughan by Ralph Helmick"
-            };
-
-            const pointGraphic = new Graphic({
-                geometry: point,
-                symbol: pointSymbol,
-                attributes: attributes,
-                popupTemplate: popupTemplate
-            });
-
-            graphicsLayer.add(pointGraphic);
-
-            const polyline = {
-                type: "polyline",
-                paths: [
-                    [-97.800, 30.300],
-                    [-97.800, 30.200],
-                    [-97.700, 30.200],
-                    [-97.700, 30.300],
-                    [-97.800, 30.300]
-                ]
-            };
-
-            const polylineSymbol = {
-                type: "simple-line",
-                color: [226, 119, 40],
-                width: 4
-            };
-
-            const polylineGraphic = new Graphic({
-                geometry: polyline,
-                symbol: polylineSymbol
-            });
-
-            graphicsLayer.add(polylineGraphic);
-
-            const circleGeometry = new Circle({
-                center: point,
-                radius: 40,
-                numberOfPoints: 100,
-                spatialReference: view.spatialReference
-            });
-
-            const circleSymbol = {
-                type: "simple-fill",
-                color: [0, 0, 255, 0.2],
-                outline: {
-                    color: [0, 0, 255],
-                    width: 2
-                }
-            };
-
-            const circleGraphic = new Graphic({
-                geometry: circleGeometry,
-                symbol: circleSymbol
-            });
-
-            graphicsLayer.add(circleGraphic);
-
-            const popupEduusa = {
-                "title": "Institution Information",
-                "content": "<b>Name:</b> {INSTNM}<br><b>Total Enrollment:</b> {INSTSIZE}<br><b>Website:</b> <a href='https://{WEBADDR}.com' target='_blank'>{WEBADDR}</a>"
-            }
-
-            const usaeduLayer = new FeatureLayer({
-                url: "https://services2.arcgis.com/FiaPA4ga0iQKduv3/arcgis/rest/services/Colleges_and_Universities_View/FeatureServer",
-                outFields: ["INSTNM", "INSTSIZE", "WEBADDR"],
-                popupTemplate: popupEduusa,
-                renderer: {
-                    type: "simple",
-                    symbol: {
-                        type: "picture-marker",
-                        url: "https://zblalock33.github.io/AGOL/outline_school_black_24dp.png",
-                        width: "12",
-                        height: "12"
-                    }
-                },
-                labelingInfo: [{
-                    symbol: {
-                        type: "text",
-                        color: "black",
-                        haloColor: "white",
-                        haloSize: "1px",
-                        font: {
-                            size: "8",
-                            family: "Arial",
-                            weight: "bold"
-                        }
-                    },
-                    labelPlacement: "above-center",
-                    labelExpressionInfo: {
-                        expression: "$feature.INSTNM"
-                    }
-                }]
-            });
-
-            map.add(usaeduLayer);
 
             const airportRenderer = {
                 type: "simple",
@@ -178,109 +53,38 @@
                 },
                 labelPlacement: "above-center",
                 labelExpressionInfo: {
-                    expression: "$feature.Fac_Name"
+                    expression: "$feature.AirportCode"
                 }
             };
 
-            const popupAirports = {
-                "title": "{Fac_Name}",
-                "content": "<b>Facility Type:</b> {Fac_Type}<br>" +
-                    "<b>Location ID:</b> {Loc_Id}<br>" +
-                    "<b>Effective Date:</b> {Eff_Date}<br>" +
-                    "<b>City:</b> {City}<br>" +
-                    "<b>State:</b> {State_Name}<br>" +
-                    "<b>Owner:</b> {Owner_Name}<br>" +
-                    "<b>Phone:</b> {Owner_Phon}"
-            };
-
-            const airportsLayer = new FeatureLayer({
-                url: "https://services.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/Zachary_Blalock_US_Airports/FeatureServer",
-                outFields: ["Fac_Type", "Loc_Id", "Eff_Date", "City", "State_Name", "Owner_Name", "Owner_Phon"],
-                popupTemplate: popupAirports,
+            const myAirports = new FeatureLayer({
+                url: "https://services.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/My_Airports_Blalock/FeatureServer",
                 renderer: airportRenderer,
-                definitionExpression: "Fac_Type = 'AIRPORT'",
-                labelingInfo: [airportLabels]
+                labelingInfo: [airportLabels],
+                outFields: ["AirportCode"]
             });
 
-            map.add(airportsLayer);
+            map.add(myAirports);
 
-            const heliportRenderer = {
-                type: "simple",
-                symbol: {
-                    type: "picture-marker",
-                    url: "https://zblalock33.github.io/AGOL/helipad.png",
-                    width: "12",
-                    height: "12"
-                }
-            };
-
-            const popupHeliports = {
-                "title": "{Fac_Name}",
-                "content": "<b>Facility Type:</b> {Fac_Type}<br>" +
-                    "<b>Location ID:</b> {Loc_Id}<br>" +
-                    "<b>Effective Date:</b> {Eff_Date}<br>" +
-                    "<b>City:</b> {City}<br>" +
-                    "<b>State:</b> {State_Name}<br>" +
-                    "<b>Owner:</b> {Owner_Name}<br>" +
-                    "<b>Phone:</b> {Owner_Phon}"
-            };
-
-            const heliportsLayer = new FeatureLayer({
-                url: "https://services.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/Zachary_Blalock_US_Airports/FeatureServer",
-                outFields: ["Fac_Type", "Loc_Id", "Eff_Date", "City", "State_Name", "Owner_Name", "Owner_Phon"],
-                popupTemplate: popupHeliports,
-                renderer: heliportRenderer,
-                definitionExpression: "Fac_Type = 'HELIPORT'",
-                labelingInfo: [{
-                    symbol: {
-                        type: "text",
-                        color: "black",
-                        haloColor: "white",
-                        haloSize: "1px",
-                        font: {
-                            size: "8",
-                            family: "Arial",
-                            weight: "bold"
-                        }
-                    },
-                    labelPlacement: "above-center",
-                    labelExpressionInfo: {
-                        expression: "$feature.Fac_Name"
-                    }
+            const legend = new Legend({
+                view: view,
+                layerInfos: [{
+                    layer: myAirports,
+                    title: "My Airports"
                 }]
             });
 
-            map.add(heliportsLayer);
-       
+            view.ui.add(legend, "bottom-right");
 
-        //adding the const for the feature layer
-const myAirports = new FeatureLayer({
- url: "https://services.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/My_Airports_Blalock/FeatureServer",
- 
- //adding the popup here
- outFields: ["AirportCode"],
+            const editor = new Editor({
+                view: view,
+                layerInfos: [{
+                    layer: myAirports
+                }]
+            });
 
-});
-
-//adding the feature layer to the map
-map.add(myAirports);
-
-// Set the point layer's LayerInfo
-const pointInfos = {
- layer: myAirports
-}
-
-// Begin Editor constructor
-const editor = new Editor({
- view: view,
- layerInfos: [pointInfos]
- }); // End Editor constructor
-
-// Add the widget to the view
-view.ui.add(editor, "top-right");
-
-
-});
+            view.ui.add(editor, "top-right");
+        });
     </script>
     <style>
         html, body, #viewDiv {
@@ -301,7 +105,6 @@ view.ui.add(editor, "top-right");
             color: darkred !important;
             font-weight: bold !important;
         }
-
         #customTitle {
             background-color: darkred;
             color: white;
